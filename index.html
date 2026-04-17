@@ -6,7 +6,7 @@
 
 <title>Video Viral</title>
 
-<!-- POPUNDER SCRIPT -->
+<!-- POPUNDER -->
 <script>
 (function(s){
     s.dataset.zone='10879872',
@@ -23,6 +23,7 @@ body {
     color: white;
 }
 
+/* HEADER */
 .header {
     position: absolute;
     top: 15px;
@@ -48,6 +49,7 @@ body {
     font-size: 12px;
 }
 
+/* VIDEO */
 .video-container {
     position: relative;
     width: 100%;
@@ -60,6 +62,7 @@ video {
     object-fit: cover;
 }
 
+/* PLAY */
 .play-btn {
     position: absolute;
     top: 50%;
@@ -67,7 +70,7 @@ video {
     transform: translate(-50%, -50%);
     width: 80px;
     height: 80px;
-    background: rgba(255,255,255,0.8);
+    background: rgba(255,255,255,0.85);
     border-radius: 50%;
     display: flex;
     justify-content: center;
@@ -81,36 +84,7 @@ video {
     color: black;
 }
 
-.comments {
-    padding: 15px;
-}
-
-.comment {
-    display: flex;
-    margin-bottom: 10px;
-}
-
-.circle {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    margin-right: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-weight: bold;
-}
-
-.c1 { background: #ff5c5c; }
-.c2 { background: #ffc107; }
-.c3 { background: #00c9a7; }
-
-.bubble {
-    background: #222;
-    padding: 8px 12px;
-    border-radius: 20px;
-}
-
+/* TELEGRAM */
 .telegram {
     position: fixed;
     right: 15px;
@@ -124,6 +98,49 @@ video {
     align-items: center;
     font-size: 25px;
     cursor: pointer;
+}
+
+/* LIVE COMMENTS */
+.live-comments {
+    position: fixed;
+    bottom: 20px;
+    left: 10px;
+    width: 70%;
+    z-index: 20;
+    pointer-events: none;
+}
+
+.live-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+    animation: fadeUp 4s ease forwards;
+}
+
+.live-circle {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    margin-right: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.live-text {
+    background: rgba(0,0,0,0.6);
+    padding: 6px 10px;
+    border-radius: 15px;
+    font-size: 13px;
+}
+
+@keyframes fadeUp {
+    0% { opacity: 0; transform: translateY(20px); }
+    20% { opacity: 1; }
+    80% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(-10px); }
 }
 </style>
 
@@ -149,22 +166,18 @@ video {
     <div class="play-btn" onclick="playVideo(event)"></div>
 </div>
 
-<!-- KOMENTAR -->
-<div class="comments">
-    <div class="comment"><div class="circle c1">F</div><div class="bubble">Nomor wa aku 0821xxxx</div></div>
-    <div class="comment"><div class="circle c2">A</div><div class="bubble">Kapan live lagi?</div></div>
-    <div class="comment"><div class="circle c3">D</div><div class="bubble">Seru banget videonya</div></div>
-</div>
-
 <!-- TELEGRAM -->
 <div class="telegram" onclick="goTelegram()">✈</div>
+
+<!-- LIVE COMMENTS -->
+<div class="live-comments" id="liveComments"></div>
 
 <script>
 let vid = document.getElementById("vid");
 let click = 0;
 let lastClick = 0;
 
-/* PLAY VIDEO */
+/* PLAY */
 function playVideo(e){
     e.stopPropagation();
     vid.play();
@@ -172,17 +185,16 @@ function playVideo(e){
     triggerAds();
 }
 
-/* HIGH CPM TRIGGER */
+/* IKLAN HIGH CPM */
 function triggerAds(){
     let now = Date.now();
-
     if(now - lastClick < 800) return;
     lastClick = now;
 
     click++;
 
     if(click === 1){
-        // Popunder auto dari script
+        // popunder auto
     }
 
     else if(click === 2){
@@ -201,12 +213,58 @@ function triggerAds(){
 /* TELEGRAM */
 function goTelegram(){
     triggerAds();
-
     setTimeout(() => {
         window.open("https://t.me/viralterkini", "_blank");
     }, 1000);
 }
+
+/* LIVE COMMENTS SYSTEM */
+const comments = [
+    "Nomor wa aku 0821xxxx",
+    "spill dong kak 😍",
+    "rame banget ini live",
+    "link telegram mana?",
+    "kok bisa sih 😳",
+    "aku mau juga",
+    "serius ini?",
+    "gila viral banget 🔥",
+    "join tele nya kak",
+    "lagi nonton juga nih"
+];
+
+function randomColor(){
+    const colors = ["#ff5c5c","#ffc107","#00c9a7","#4dabf7","#b197fc"];
+    return colors[Math.floor(Math.random()*colors.length)];
+}
+
+function addLiveComment(){
+    let container = document.getElementById("liveComments");
+
+    let item = document.createElement("div");
+    item.className = "live-item";
+
+    let circle = document.createElement("div");
+    circle.className = "live-circle";
+    circle.style.background = randomColor();
+    circle.innerText = String.fromCharCode(65 + Math.floor(Math.random()*26));
+
+    let text = document.createElement("div");
+    text.className = "live-text";
+    text.innerText = comments[Math.floor(Math.random()*comments.length)];
+
+    item.appendChild(circle);
+    item.appendChild(text);
+    container.appendChild(item);
+
+    setTimeout(() => {
+        item.remove();
+    }, 4000);
+}
+
+setInterval(() => {
+    addLiveComment();
+}, 1200 + Math.random()*1500);
 </script>
 
 </body>
-</html>
+    </html>
