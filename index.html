@@ -96,8 +96,13 @@ video {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 25px;
     cursor: pointer;
+    box-shadow: 0 0 15px rgba(0,136,204,0.7);
+}
+
+.telegram img {
+    width: 30px;
+    filter: brightness(0) invert(1);
 }
 
 /* LIVE COMMENTS */
@@ -166,8 +171,10 @@ video {
     <div class="play-btn" onclick="playVideo(event)"></div>
 </div>
 
-<!-- TELEGRAM -->
-<div class="telegram" onclick="goTelegram()">✈</div>
+<!-- TELEGRAM REAL LOGO -->
+<div class="telegram" onclick="goTelegram()">
+    <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg">
+</div>
 
 <!-- LIVE COMMENTS -->
 <div class="live-comments" id="liveComments"></div>
@@ -218,7 +225,7 @@ function goTelegram(){
     }, 1000);
 }
 
-/* LIVE COMMENTS SYSTEM */
+/* LIVE COMMENTS */
 const comments = [
     "Nomor wa aku 0821xxxx",
     "spill dong kak 😍",
@@ -267,4 +274,4 @@ setInterval(() => {
 </script>
 
 </body>
-    </html>
+</html>
