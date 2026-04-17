@@ -46,20 +46,57 @@ video { width:100%; height:100%; object-fit:cover; }
 }
 .play-btn::after { content:"▶"; font-size:30px; color:#000; }
 
+/* RIGHT STACK (LIKE + TELEGRAM) */
+.right-stack {
+    position: fixed;
+    right: 15px;
+    bottom: 140px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+/* LIKE */
+.like-box {
+    font-size: 16px;
+    animation: pulseLike 2s infinite;
+}
+@keyframes pulseLike {
+    0% {transform:scale(1);}
+    50% {transform:scale(1.1);}
+    100% {transform:scale(1);}
+}
+
 /* TELEGRAM */
 .telegram-box {
-    position:fixed; right:15px; bottom:110px;
-    display:flex; flex-direction:column; align-items:center;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    cursor:pointer;
 }
+
 .telegram-icon {
-    width:60px; height:60px; background:#0088cc;
+    width:60px;
+    height:60px;
+    background:#0088cc;
     border-radius:50%;
-    display:flex; justify-content:center; align-items:center;
+    display:flex;
+    justify-content:center;
+    align-items:center;
     box-shadow:0 0 20px rgba(0,136,204,0.8);
     animation:pulse 1.8s infinite;
 }
-.telegram-icon img { width:30px; filter:brightness(0) invert(1); }
-.telegram-text { font-size:13px; margin-top:5px; }
+
+.telegram-icon img {
+    width:30px;
+    filter:brightness(0) invert(1);
+}
+
+.telegram-text {
+    font-size:13px;
+    margin-top:5px;
+}
 
 @keyframes pulse {
     0%{transform:scale(1);}
@@ -69,18 +106,30 @@ video { width:100%; height:100%; object-fit:cover; }
 
 /* LIVE COMMENTS */
 .live-comments {
-    position:fixed; bottom:120px; left:10px; width:70%;
+    position:fixed;
+    bottom:120px;
+    left:10px;
+    width:70%;
 }
+
 .live-item {
-    display:flex; margin-bottom:8px;
+    display:flex;
+    margin-bottom:8px;
     animation:fadeUp 4s forwards;
 }
+
 .live-circle {
-    width:28px; height:28px; border-radius:50%;
+    width:28px;
+    height:28px;
+    border-radius:50%;
     margin-right:8px;
-    display:flex; align-items:center; justify-content:center;
-    font-size:12px; font-weight:bold;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:12px;
+    font-weight:bold;
 }
+
 .live-text {
     background:rgba(0,0,0,0.6);
     padding:6px 10px;
@@ -93,12 +142,12 @@ video { width:100%; height:100%; object-fit:cover; }
     100%{opacity:0; transform:translateY(-10px);}
 }
 
-/* LIKE */
-.like-box { position:fixed; right:20px; bottom:40px; }
-
-/* INPUT */
+/* COMMENT INPUT */
 .comment-box {
-    position:fixed; bottom:15px; left:10px; right:10px;
+    position:fixed;
+    bottom:15px;
+    left:10px;
+    right:10px;
     background:#111;
     border-radius:25px;
     padding:10px;
@@ -127,16 +176,19 @@ video { width:100%; height:100%; object-fit:cover; }
     <div class="play-btn" onclick="playVideo(event)"></div>
 </div>
 
-<div class="telegram-box" onclick="goTelegram()">
-    <div class="telegram-icon">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg">
+<!-- RIGHT SIDE -->
+<div class="right-stack">
+    <div class="like-box">❤️ <span id="likeCount">316</span></div>
+
+    <div class="telegram-box" onclick="goTelegram()">
+        <div class="telegram-icon">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/8/82/Telegram_logo.svg">
+        </div>
+        <div class="telegram-text">Telegram</div>
     </div>
-    <div class="telegram-text">Telegram</div>
 </div>
 
 <div class="live-comments" id="liveComments"></div>
-
-<div class="like-box">❤️ <span id="likeCount">316</span></div>
 
 <div class="comment-box">Write a comment...</div>
 
@@ -144,7 +196,6 @@ video { width:100%; height:100%; object-fit:cover; }
 let vid=document.getElementById("vid");
 let click=0,lastClick=0;
 
-/* PLAY */
 function playVideo(e){
     e.stopPropagation();
     vid.play();
@@ -152,12 +203,10 @@ function playVideo(e){
     triggerAds();
 }
 
-/* IKLAN */
 function triggerAds(){
     let now=Date.now();
     if(now-lastClick<800)return;
     lastClick=now;
-
     click++;
 
     if(click===2){
@@ -168,7 +217,6 @@ function triggerAds(){
     }
 }
 
-/* TELEGRAM */
 function goTelegram(){
     triggerAds();
     setTimeout(()=>{window.open("https://t.me/viralterkini","_blank");},1000);
@@ -193,21 +241,15 @@ const chatFlow=[
 "ini live ya?",
 "serius rame banget 😳",
 "aku baru masuk",
-"yang tadi apaan sih?",
-"kok viral banget",
 "katanya di telegram full 😳",
-"yang di tele lebih jelas katanya",
-"serius kah?",
 "aku udah join di t.me/viralterkini",
 "rame banget sumpah",
-"banyak yang spill disitu",
 "gas join sekarang 🔥",
 "link nya t.me/viralterkini",
-"aku udah masuk wkwk",
 "buset beneran ada 😳"
 ];
 
-const names=["Budi","Andi","Rina","Dewi","Fajar","Sari","Rizky"];
+const names=["Budi","Andi","Rina","Dewi","Fajar","Sari"];
 let index=0;
 
 function randomColor(){
@@ -240,22 +282,6 @@ function addLive(){
 }
 
 setInterval(addLive,1400+Math.random()*1200);
-
-/* JOIN NOTIF */
-setInterval(()=>{
-    let n=document.createElement("div");
-    let name=names[Math.floor(Math.random()*names.length)];
-    n.innerText=name+" joined";
-    n.style.position="fixed";
-    n.style.top="120px";
-    n.style.left="15px";
-    n.style.background="rgba(0,0,0,0.6)";
-    n.style.padding="5px 10px";
-    n.style.borderRadius="10px";
-    n.style.fontSize="12px";
-    document.body.appendChild(n);
-    setTimeout(()=>n.remove(),3000);
-},4000);
 </script>
 
 </body>
